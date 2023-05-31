@@ -9,7 +9,7 @@ export const GET_USER_INFO = "GET_USER_INFO";
 export function createTicket(arg) {
     return async function () {
       try {
-         await axios.post("https://siges-production.up.railway.app/optickets", { 
+         await axios.post("https://sigesback-production.up.railway.app/optickets", { 
           name: arg.name,
           client: arg.client,
           detail: arg.detail,
@@ -23,7 +23,7 @@ export function createTicket(arg) {
 
   export function getAllOpTickets() {
     return async function (dispatch) {
-      var allOpTickets = await axios.get(`https://siges-production.up.railway.app/optickets`);
+      var allOpTickets = await axios.get(`https://sigesback-production.up.railway.app/optickets`);
       return dispatch({
         type: GET_ALL_OPTICKETS,
         payload: allOpTickets.data,
@@ -33,7 +33,7 @@ export function createTicket(arg) {
 
   export function deleteOpTickets(id) {
     return async function (dispatch) {
-      await axios.delete(`https://siges-production.up.railway.app/optickets?id=${id}`);
+      await axios.delete(`https://sigesback-production.up.railway.app/optickets?id=${id}`);
       return dispatch({
         type: DELETE_OPTICKETS,
         payload: id,
@@ -43,7 +43,7 @@ export function createTicket(arg) {
 
   export function getAllComputers() {
     return async function (dispatch) {
-      var allComputers = await axios.get(`https://siges-production.up.railway.app/computers`);
+      var allComputers = await axios.get(`https://sigesback-production.up.railway.app/computers`);
       return dispatch({
         type: GET_ALL_COMPUTERS,
         payload: allComputers.data,
@@ -53,7 +53,7 @@ export function createTicket(arg) {
 
   export function getComputer(id) {
     return async function (dispatch) {
-      const computer = await axios.get(`https://siges-production.up.railway.app/computers/${id}`);
+      const computer = await axios.get(`https://sigesback-production.up.railway.app/computers/${id}`);
       return dispatch({
         type: GET_COMPUTER,
         payload: computer.data,
@@ -69,14 +69,14 @@ export function createTicket(arg) {
 
   export function editComputer(id,input) {
     return async function () {
-      await axios.put(`https://siges-production.up.railway.app/computers/${id}`,input);
+      await axios.put(`https://sigesback-production.up.railway.app/computers/${id}`,input);
     };
   }
 
   export function login(input) {
     return async function (dispatch) {
       try {
-        const resultado = await axios.post("https://siges-production.up.railway.app/login", input); 
+        const resultado = await axios.post("https://sigesback-production.up.railway.app/login", input); 
         if (resultado.data.message === "Inicio de sesión exitoso") {
           dispatch({ type: LOGIN_SUCCESS , payload: input.email});
         }
@@ -89,7 +89,7 @@ export function createTicket(arg) {
   export function findUser(id) {
     return async function (dispatch) {
       try {
-        const resultado = await axios.get(`https://siges-production.up.railway.app/users?id=${id}`); 
+        const resultado = await axios.get(`https://sigesback-production.up.railway.app/users?id=${id}`); 
         return dispatch({
           type: GET_USER_INFO,
           payload: resultado.data[0] ? resultado.data[0] : {},
@@ -103,7 +103,7 @@ export function createTicket(arg) {
   export function createWebUser(data) {
     return async function () {
       try {
-      await axios.post(`https://siges-production.up.railway.app/webusers`,data); 
+      await axios.post(`https://sigesback-production.up.railway.app/webusers`,data); 
 
       } catch (error) {
         alert(error.response.data.message)
@@ -114,7 +114,7 @@ export function createTicket(arg) {
   export function activateUser(username,role){
     return async function () {
       try {
-      await axios.put(`https://siges-production.up.railway.app/webusers`,{
+      await axios.put(`https://sigesback-production.up.railway.app/webusers`,{
         username,
         role
       }); 
