@@ -124,3 +124,29 @@ export function createTicket(arg) {
       }
     };
   }
+
+  export function resetPassword(username){
+    return async function () {
+      try {
+      const userInfo = await axios.get(`https://sigesback-production.up.railway.app/webusers?username=${username}&reset=true`); 
+      console.log(userInfo) 
+      alert(`Correo enviado a ${userInfo.data.email} para recuperar la contraseña`)
+      } catch (error) {
+        alert(error.response.data.message)
+      }
+    };
+  }
+
+  export function changePassword (username,password){
+    return async function () {
+      try {
+        await axios.put(`https://sigesback-production.up.railway.app/webusers`,{
+          username,
+          password
+        }); 
+      alert(`Contraseña cambiada!`)
+      } catch (error) {
+        alert(error.response.data.message)
+      }
+    };
+  }

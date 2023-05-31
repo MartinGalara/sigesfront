@@ -57,7 +57,7 @@ export default function LandingPage() {
     <br />
       <Link href="/createaccount">No tenes cuenta? Crear cuenta</Link>
       <br />
-      <Link href="#">Olvidaste la contraseña?</Link>
+      <Link href="/resetpassword">Olvidaste la contraseña?</Link>
   </div>
   );
 }

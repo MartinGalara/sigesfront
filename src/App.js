@@ -8,6 +8,8 @@ import Computers from './components/Computers/Computers';
 import ComputerDetail from './components/ComputerDetail/ComputerDetail';
 import CreateAccount from './components/CreateAccount/CreateAccount';
 import NewUser from './components/NewUser/NewUser';
+import ResetPassword from './components/ResetPassword/ResetPassword';
+import NewPassword from './components/NewPassword/NewPassword';
 
 function App() {
   return (
@@ -20,6 +22,12 @@ function App() {
       </Route>
       <Route exact path='/newuser'>
         <NewUser/>
+      </Route>
+      <Route exact path='/resetpassword'>
+        <ResetPassword/>
+      </Route>
+      <Route exact path='/newpassword'>
+        <NewPassword/>
       </Route>
       <Route exact path='/ticket'>
         <TicketForm/>

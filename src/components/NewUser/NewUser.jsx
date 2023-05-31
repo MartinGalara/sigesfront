@@ -43,8 +43,8 @@ export default function NewUser() {
     <FormControl>
         <InputLabel>Rol</InputLabel>
         <Select value={role} onChange={handleRoleChange}>
-            <MenuItem value="admin">Admin</MenuItem>
-            <MenuItem value="user">User</MenuItem>
+            <MenuItem value="Admin">Admin</MenuItem>
+            <MenuItem value="User">User</MenuItem>
         </Select>
     </FormControl>
     <Button variant="contained" onClick={handleActivarUsuario}>
