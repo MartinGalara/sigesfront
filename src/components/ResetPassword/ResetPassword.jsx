@@ -6,25 +6,25 @@ import { resetPassword } from "../../redux/actions";
 
 export default function ResetPassword() {
 
-    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
 
     const dispatch = useDispatch();
 
-    const handleUsernameChange = (event) => {
-        setUsername(event.target.value);
+    const handleEmailChange = (event) => {
+        setEmail(event.target.value);
     };
 
   const handleReset = () => {
     // Aquí puedes realizar alguna acción con los datos ingresados, por ejemplo, enviarlos al servidor
-    dispatch(resetPassword( username ));
+    dispatch(resetPassword( email ));
   };
 
   return (
     <div>
     <TextField
-        label="Username"
-        value={username}
-        onChange={handleUsernameChange}
+        label="Email"
+        value={email}
+        onChange={handleEmailChange}
       />
     <Button variant="contained" onClick={handleReset}>
         Recuperar contraseña

@@ -6,21 +6,21 @@ import { changePassword } from "../../redux/actions";
 
 export default function NewPassword() {
 
-    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const dispatch = useDispatch();
 
     useEffect(() => {
         const queryParams = new URLSearchParams(window.location.search);
-        const usernameParam = queryParams.get("username");
-        if (usernameParam) {
-          setUsername(usernameParam);
+        const emailParam = queryParams.get("email");
+        if (emailParam) {
+          setEmail(emailParam);
         }
       }, []);
 
-    const handleUsernameChange = (event) => {
-        setUsername(event.target.value);
+    const handleEmailChange = (event) => {
+        setEmail(event.target.value);
     };
 
     const handlePasswordChange = (event) => {
@@ -29,16 +29,16 @@ export default function NewPassword() {
 
   const handleSubmit = () => {
     // Aquí puedes realizar alguna acción con los datos ingresados, por ejemplo, enviarlos al servidor
-        dispatch(changePassword( username, password ));
+        dispatch(changePassword( email, password ));
 
   };
 
   return (
     <div>
     <TextField
-        label="Username"
-        value={username}
-        onChange={handleUsernameChange}
+        label="Email"
+        value={email}
+        onChange={handleEmailChange}
         disabled
       />
       <TextField 

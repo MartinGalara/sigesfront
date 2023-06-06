@@ -125,11 +125,10 @@ export function createTicket(arg) {
     };
   }
 
-  export function resetPassword(username){
+  export function resetPassword(email){
     return async function () {
       try {
-      const userInfo = await axios.get(`https://sigesback-production.up.railway.app/webusers?username=${username}&reset=true`); 
-      console.log(userInfo) 
+      const userInfo = await axios.get(`https://sigesback-production.up.railway.app/webusers?email=${email}&reset=true`); 
       alert(`Correo enviado a ${userInfo.data.email} para recuperar la contraseña`)
       } catch (error) {
         alert(error.response.data.message)
