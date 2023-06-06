@@ -136,11 +136,13 @@ export function createTicket(arg) {
     };
   }
 
-  export function changePassword (username,password){
+  export function changePassword (email,password){
     return async function () {
+      console.log(email)
+      console.log(password)
       try {
         await axios.put(`https://sigesback-production.up.railway.app/webusers`,{
-          username,
+          email,
           password
         }); 
       alert(`Contraseña cambiada!`)
