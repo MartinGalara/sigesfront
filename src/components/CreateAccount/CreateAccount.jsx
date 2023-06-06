@@ -10,7 +10,7 @@ export default function CreateAccount() {
         flag:"",
         id: "",
         password: "",
-        username: "",
+        email: "",
         identificador:""
       })
     
@@ -30,14 +30,14 @@ export default function CreateAccount() {
             alert('No se encontro a un cliente con ese identificador')
         }else if(!userInfo.hasOwnProperty('empty')){
             dispatch(createWebUser({
-              username: input.username,
+              email: input.email,
               password: input.password,
               userId: input.identificador,
-              email: userInfo.email
+              defaultEmail: userInfo.email
             }))
             alert(`Se envió un correo electrónico a ${userInfo.email} para habilitar el usuario creado.`);
         }
-      }, [userInfo, dispatch, input.identificador, input.password, input.username]);
+      }, [userInfo, dispatch, input.identificador, input.password, input.email]);
     
 
 
@@ -102,21 +102,21 @@ export default function CreateAccount() {
       id="id"
       label="Identificador"
       type="id"
-      value={input.email}
+      value={input.id}
       onChange={handleInputChange}
       helperText={`Identificador único de estacion (Ej: YPF => Apies)`}
     />
     <br />
     <TextField 
-      id="username"
-      label="Usuario"
-      type="username"
-      value={input.username}
+      id="email"
+      label="Correo"
+      type="email"
+      value={input.email}
       onChange={handleInputChange}
       inputProps={{
         maxLength: 20 // Establece el límite máximo de 30 caracteres
       }}
-      helperText={`El usuario debe tener como máximo 20 caracteres`}
+      helperText={`Ingrese un correo valido`}
     />
     <br /><TextField 
       id="password"

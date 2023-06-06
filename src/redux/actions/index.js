@@ -111,11 +111,11 @@ export function createTicket(arg) {
     };
   }
 
-  export function activateUser(username,role){
+  export function activateUser(email,role){
     return async function () {
       try {
       await axios.put(`https://sigesback-production.up.railway.app/webusers`,{
-        username,
+        email,
         role
       }); 
         alert("Usuario activado con exito")

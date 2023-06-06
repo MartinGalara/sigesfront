@@ -6,21 +6,21 @@ import { activateUser } from "../../redux/actions";
 
 export default function NewUser() {
 
-    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
     const [role, setRole] = useState("");
 
     const dispatch = useDispatch();
 
     useEffect(() => {
         const queryParams = new URLSearchParams(window.location.search);
-        const usernameParam = queryParams.get("username");
-        if (usernameParam) {
-          setUsername(usernameParam);
+        const emailParam = queryParams.get("email");
+        if (emailParam) {
+          setEmail(emailParam);
         }
       }, []);
 
-    const handleUsernameChange = (event) => {
-        setUsername(event.target.value);
+    const handleEmailChange = (event) => {
+        setEmail(event.target.value);
     };
 
     const handleRoleChange = (event) => {
@@ -29,15 +29,15 @@ export default function NewUser() {
 
   const handleActivarUsuario = () => {
     // Aquí puedes realizar alguna acción con los datos ingresados, por ejemplo, enviarlos al servidor
-    dispatch(activateUser( username, role ));
+    dispatch(activateUser( email, role ));
   };
 
   return (
     <div>
     <TextField
-        label="Username"
-        value={username}
-        onChange={handleUsernameChange}
+        label="Email"
+        value={email}
+        onChange={handleEmailChange}
         disabled
       />
     <FormControl>
