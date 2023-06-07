@@ -12,6 +12,9 @@ import {
     computers: [],
     computerDetail: {},
     userEmail: "",
+    userRole: "",
+    userId: "",
+    userActive: "",
     userInfo:{
       empty: true,
     }
@@ -57,7 +60,11 @@ import {
       case LOGIN_SUCCESS:
         return {
           ...state,
-          userEmail: action.payload,
+          userEmail: action.payload.email,
+          userRole: action.payload.role,
+          userId: action.payload.userId,
+          userActive: action.payload.active,
+          token: action.payload.token
         };
 
       case GET_USER_INFO:

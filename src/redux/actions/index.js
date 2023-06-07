@@ -77,8 +77,8 @@ export function createTicket(arg) {
     return async function (dispatch) {
       try {
         const resultado = await axios.post("https://sigesback-production.up.railway.app/login", input); 
-        if (resultado.data.message === "Inicio de sesión exitoso") {
-          dispatch({ type: LOGIN_SUCCESS , payload: input.email});
+        if (resultado.data.token) {
+          dispatch({ type: LOGIN_SUCCESS , payload: resultado.data});
         }
       } catch (error) {
         alert(error.response.data.message)
@@ -138,8 +138,6 @@ export function createTicket(arg) {
 
   export function changePassword (email,password){
     return async function () {
-      console.log(email)
-      console.log(password)
       try {
         await axios.put(`https://sigesback-production.up.railway.app/webusers`,{
           email,

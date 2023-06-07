@@ -1,63 +1,48 @@
-import React, { useState, useEffect } from "react";
-import { TextField, Button, Link } from "@mui/material";
-import { useDispatch, useSelector  } from "react-redux";
-import { login } from "../../redux/actions";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import LoginForm from "../LoginForm/LoginForm";
+import Cookies from "js-cookie";
 
 export default function LandingPage() {
-
-  const [input, setInput] = useState({
-    email: "",
-    password: ""
-  })
+  const token = useSelector((state) => state.token);
+  const active = useSelector((state) => state.userActive);
+  const role = useSelector((state) => state.userRole);
 
   const dispatch = useDispatch();
-  const userEmail = useSelector(state => state.userEmail);
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    dispatch(login(input));
-    setInput({
-      email: "",
-      password: ""
-  })
-  };
-
-  const handleInputChange = (e) => {
-    setInput({ ...input, [e.target.id]: e.target.value})
+  if(token) {
+    Cookies.set("token", token, { expires: 7 });
   }
 
   useEffect(() => {
-    if (userEmail !== "") {
-      alert("¡Usuario activo! ¡Haga algo aquí!");
+    const token = Cookies.get("token");
+
+    if (token) {
+      // Realiza una solicitud al backend para el inicio de sesión automático
+      //dispatch(login({ token }));
+      console.log("entre aca xq hay cookies")
     }
-  }, [userEmail]);
+  }, [dispatch]);
 
   return (
     <div>
-    <h1>Sistema SIGES - Pagina Oficial</h1>
-    <TextField 
-      id="email"
-      label="Email"
-      type="email"
-      value={input.email}
-      onChange={handleInputChange}
-    />
-    <br />
-    <TextField 
-      id="password"
-      label="Contraseña"
-      type="password"
-      value={input.password}
-      onChange={handleInputChange}
-    />
-    <br />
-    <Button variant="contained" color="primary" onClick={handleLogin}>
-      Iniciar sesión
-    </Button>
-    <br />
-      <Link href="/createaccount">No tenes cuenta? Crear cuenta</Link>
-      <br />
-      <Link href="/resetpassword">Olvidaste la contraseña?</Link>
-  </div>
+      <h1>Sistema SIGES - Pagina Oficial</h1>
+      {token ? (
+        // El usuario tiene un token válido
+        <div>
+          <h2>Bienvenido, usuario</h2>
+          {/* Renderizar contenido adicional basado en el rol o estado activo */}
+          {console.log(role)}
+          {console.log(active)}
+          {role === "Admin" && <p>¡Eres un administrador!</p>}
+          {active && <p>Tu cuenta está activa</p>}
+        </div>
+      ) : (
+        // El usuario no tiene un token válido, mostrar el formulario de inicio de sesión
+        <LoginForm />
+      )}
+      
+    </div>
   );
 }
