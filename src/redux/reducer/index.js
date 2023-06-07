@@ -4,7 +4,8 @@ import {
   GET_ALL_COMPUTERS,
   GET_COMPUTER,
   LOGIN_SUCCESS,
-  GET_USER_INFO
+  GET_USER_INFO,
+  LOG_OUT
 } from "../actions"; 
  
  const initialState = {
@@ -15,6 +16,7 @@ import {
     userRole: "",
     userId: "",
     userActive: "",
+    token: "",
     userInfo:{
       empty: true,
     }
@@ -72,6 +74,16 @@ import {
           ...state,
           userInfo: action.payload
         }
+
+      case LOG_OUT:
+        return{
+          ...state,
+          userEmail: "",
+          userRole: "",
+          userId: "",
+          userActive: "",
+          token:""
+          }
 
       default:
       return state;

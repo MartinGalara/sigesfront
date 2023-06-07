@@ -1,17 +1,23 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import LoginForm from "../LoginForm/LoginForm";
 import Cookies from "js-cookie";
+import { loginWithToken, logOut } from "../../redux/actions";
+import Button from "@mui/material/Button";
 
 export default function LandingPage() {
   const token = useSelector((state) => state.token);
-  const active = useSelector((state) => state.userActive);
-  const role = useSelector((state) => state.userRole);
 
   const dispatch = useDispatch();
 
-  if(token) {
+  const handleLogout = () => {
+    // Eliminar el token de las cookies
+    Cookies.remove("token");
+    // Limpiar los estados globales
+    dispatch(logOut());
+  };
+
+  if (token) {
     Cookies.set("token", token, { expires: 7 });
   }
 
@@ -20,8 +26,7 @@ export default function LandingPage() {
 
     if (token) {
       // Realiza una solicitud al backend para el inicio de sesión automático
-      //dispatch(login({ token }));
-      console.log("entre aca xq hay cookies")
+      dispatch(loginWithToken(token));
     }
   }, [dispatch]);
 
@@ -33,16 +38,14 @@ export default function LandingPage() {
         <div>
           <h2>Bienvenido, usuario</h2>
           {/* Renderizar contenido adicional basado en el rol o estado activo */}
-          {console.log(role)}
-          {console.log(active)}
-          {role === "Admin" && <p>¡Eres un administrador!</p>}
-          {active && <p>Tu cuenta está activa</p>}
+          <Button variant="contained" color="secondary" onClick={handleLogout}>
+            Cerrar sesión
+          </Button>
         </div>
       ) : (
         // El usuario no tiene un token válido, mostrar el formulario de inicio de sesión
         <LoginForm />
       )}
-      
     </div>
   );
 }

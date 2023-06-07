@@ -5,6 +5,7 @@ export const GET_ALL_COMPUTERS = "GET_ALL_COMPUTERS";
 export const GET_COMPUTER = "GET_COMPUTER";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const GET_USER_INFO = "GET_USER_INFO";
+export const LOG_OUT = "LOG_OUT";
 
 export function createTicket(arg) {
     return async function () {
@@ -146,6 +147,37 @@ export function createTicket(arg) {
       alert(`Contraseña cambiada!`)
       } catch (error) {
         alert(error.response.data.message)
+      }
+    };
+  }
+
+  export function loginWithToken(token) {
+    return async function (dispatch) {
+      try {
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        };
+  
+        const resultado = await axios.get("https://sigesback-production.up.railway.app/login", config);
+        console.log(resultado)
+        if (resultado.data.token) {
+          console.log("hago el dispatch")
+          dispatch({ type: LOGIN_SUCCESS, payload: resultado.data });
+        }
+      } catch (error) {
+        alert(error.response.data.message);
+      }
+    };
+  }
+
+  export function logOut() {
+    return async function (dispatch) {
+      try {
+          dispatch({ type: LOG_OUT });
+      } catch (error) {
+        alert(error.response.data.message);
       }
     };
   }
