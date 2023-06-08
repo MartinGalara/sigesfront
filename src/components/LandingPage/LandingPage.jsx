@@ -7,6 +7,9 @@ import Button from "@mui/material/Button";
 
 export default function LandingPage() {
   const token = useSelector((state) => state.token);
+  const role = useSelector((state) => state.userRole);
+
+  console.log(role);
 
   const dispatch = useDispatch();
 
@@ -30,6 +33,10 @@ export default function LandingPage() {
     }
   }, [dispatch]);
 
+  const redirectToURL = (url) => {
+    window.location.href = url;
+  };
+
   return (
     <div>
       <h1>Sistema SIGES - Pagina Oficial</h1>
@@ -38,7 +45,50 @@ export default function LandingPage() {
         <div>
           <h2>Bienvenido, usuario</h2>
           {/* Renderizar contenido adicional basado en el rol o estado activo */}
-          <Button variant="contained" color="secondary" onClick={handleLogout}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => redirectToURL("/recomendaciones")}
+          >
+            Recomendaciones SIGES
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => redirectToURL("/soporte")}
+          >
+            Soporte
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => redirectToURL("/manuales")}
+          >
+            Manuales / Capacitaciones
+          </Button>
+          {role === "SuperAdmin" && (
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => redirectToURL("/admin")}
+            >
+              Dashboard Admin
+            </Button>
+          )}
+          {role === "Operador" && (
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => redirectToURL("/operador")}
+            >
+              Dashboard Operador
+            </Button>
+          )}
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={handleLogout}
+          >
             Cerrar sesión
           </Button>
         </div>

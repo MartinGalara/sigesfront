@@ -91,11 +91,11 @@ export default function CreateAccount() {
         <MenuItem value="YPF">YPF</MenuItem>
         <MenuItem value="Shell">Shell</MenuItem>
         <MenuItem value="Axion">Axion</MenuItem>
-        <MenuItem value="Axion">Puma</MenuItem>
-        <MenuItem value="Axion">Gulf</MenuItem>
-        <MenuItem value="Axion">Refinor</MenuItem>
-        <MenuItem value="Axion">Est. Blanca</MenuItem>
-        <MenuItem value="Axion">Otro</MenuItem>
+        <MenuItem value="Puma">Puma</MenuItem>
+        <MenuItem value="Gulf">Gulf</MenuItem>
+        <MenuItem value="Refinor">Refinor</MenuItem>
+        <MenuItem value="Est. Blanca">Est. Blanca</MenuItem>
+        <MenuItem value="Otro">Otro</MenuItem>
       </Select>
       <br />
      <TextField 
