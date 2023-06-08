@@ -11,6 +11,8 @@ import NewUser from './components/NewUser/NewUser';
 import ResetPassword from './components/ResetPassword/ResetPassword';
 import NewPassword from './components/NewPassword/NewPassword';
 import Recomendaciones from './components/Recomendaciones/Recomendaciones';
+import Soporte from './components/Soporte/Soporte';
+import Manuales from './components/Manuales/Manuales';
 
 function App() {
   return (
@@ -32,6 +34,12 @@ function App() {
       </Route>
       <Route exact path='/recomendaciones'>
         <Recomendaciones/>
+      </Route>
+      <Route exact path='/soporte'>
+        <Soporte/>
+      </Route>
+      <Route exact path='/manuales'>
+        <Manuales/>
       </Route>
       <Route exact path='/ticket'>
         <TicketForm/>
