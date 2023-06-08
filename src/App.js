@@ -10,6 +10,7 @@ import CreateAccount from './components/CreateAccount/CreateAccount';
 import NewUser from './components/NewUser/NewUser';
 import ResetPassword from './components/ResetPassword/ResetPassword';
 import NewPassword from './components/NewPassword/NewPassword';
+import Recomendaciones from './components/Recomendaciones/Recomendaciones';
 
 function App() {
   return (
@@ -28,6 +29,9 @@ function App() {
       </Route>
       <Route exact path='/newpassword'>
         <NewPassword/>
+      </Route>
+      <Route exact path='/recomendaciones'>
+        <Recomendaciones/>
       </Route>
       <Route exact path='/ticket'>
         <TicketForm/>
