@@ -14,6 +14,8 @@ import Recomendaciones from './components/Recomendaciones/Recomendaciones';
 import Soporte from './components/Soporte/Soporte';
 import Manuales from './components/Manuales/Manuales';
 import EditorDashboard from './components/EditorDashboard/EditorDashboard';
+import NuevaRecomendacion from './components/EditorDashboard/Recomendaciones/NuevaRecomendacion';
+import ModificarRecomendacion from './components/EditorDashboard/Recomendaciones/ModificarRecomendacion';
 
 function App() {
   return (
@@ -35,6 +37,12 @@ function App() {
       </Route>
       <Route exact path='/recomendaciones'>
         <Recomendaciones/>
+      </Route>
+      <Route exact path='/recomendaciones/crear'>
+        <NuevaRecomendacion/>
+      </Route>
+      <Route exact path='/recomendaciones/modificar/:id'>
+        <ModificarRecomendacion/>
       </Route>
       <Route exact path='/soporte'>
         <Soporte/>

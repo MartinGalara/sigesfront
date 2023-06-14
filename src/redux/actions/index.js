@@ -181,3 +181,13 @@ export function createTicket(arg) {
       }
     };
   }
+
+  export function getRecommendations() {
+    return async function (dispatch) {
+      try {
+          dispatch({ type: LOG_OUT });
+      } catch (error) {
+        alert(error.response.data.message);
+      }
+    };
+  }

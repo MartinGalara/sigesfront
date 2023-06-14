@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import { styled } from "@mui/system";
 import Box from "@mui/material/Box";
 
-import EditorRecomendaciones from "./EditorRecomendaciones";
+import EditorRecomendaciones from "./Recomendaciones/EditorRecomendaciones";
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
   marginBottom: theme.spacing(2),
