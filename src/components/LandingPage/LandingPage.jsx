@@ -84,6 +84,15 @@ export default function LandingPage() {
               Dashboard Operador
             </Button>
           )}
+          {role === "Editor" && (
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => redirectToURL("/editor")}
+            >
+              Dashboard Editor
+            </Button>
+          )}
           <Button
             variant="contained"
             color="secondary"

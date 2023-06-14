@@ -13,6 +13,7 @@ import NewPassword from './components/NewPassword/NewPassword';
 import Recomendaciones from './components/Recomendaciones/Recomendaciones';
 import Soporte from './components/Soporte/Soporte';
 import Manuales from './components/Manuales/Manuales';
+import EditorDashboard from './components/EditorDashboard/EditorDashboard';
 
 function App() {
   return (
@@ -43,6 +44,9 @@ function App() {
       </Route>
       <Route exact path='/ticket'>
         <TicketForm/>
+      </Route>
+      <Route exact path='/editor'>
+        <EditorDashboard/>
       </Route>
       <Route exact path='/admin'>
         <AdminDashboard/>
