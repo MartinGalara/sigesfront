@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { TextField, Button, Grid, FormControl, InputLabel, Select, MenuItem, Box } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 import { Buffer } from 'buffer';
+import axios from "axios";
 
 export default function NuevaRecomendacion() {
   const [title, setTitle] = useState('');
@@ -76,18 +77,19 @@ export default function NuevaRecomendacion() {
 
   const handleOpenPopup = async () => {
     setOpenPopup(true);
-    try {
-     /*  const results = await fetch('/api/v1_1/diapwgajv/resources/search', {
-			headers: {
-				Authorization: `Basic ${Buffer.from(
-					CLOUDINARY_API_KEY + ':' + CLOUDINARY_API_SECRET
-				).toString('base64')}`,
-			},
-		}).then((res) => res.json());
-		const cloudinary_array = await results.resources;
-		const cloudinary_images = await cloudinary_array.filter(
-			(index) => index.folder === 'AppGym-facilities'
-		); */
+
+      const username = '528937882136667';
+      const password = 'H-WT2Ys7_qZb_A5KD2dW-HjtBkU';
+      const basicAuth = `Basic ${Buffer.from(`${username}:${password}`).toString('base64')}`;
+
+  try {
+    const response = await axios.get('https://api.cloudinary.com/v1_1/diapwgajv/resources/image', {
+      headers: {
+        Authorization: basicAuth,
+      },
+    });
+
+    console.log(response.data);
     } catch (error) {
       console.error('Error al cargar las imágenes de Cloudinary:', error);
     }
