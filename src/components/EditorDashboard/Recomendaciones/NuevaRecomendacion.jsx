@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TextField, Button, Grid, FormControl, InputLabel, Select, MenuItem, Box } from '@mui/material';
 import { useHistory } from 'react-router-dom';
-import { Buffer } from 'buffer';
-import axios from "axios";
+import axios from 'axios';
 
 export default function NuevaRecomendacion() {
   const [title, setTitle] = useState('');
@@ -12,6 +11,8 @@ export default function NuevaRecomendacion() {
   const [file, setFile] = useState(null);
   const [openPopup, setOpenPopup] = useState(false);
   const [cloudinaryImages, setCloudinaryImages] = useState([]);
+  const [submitClicked, setSubmitClicked] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   const history = useHistory();
 
@@ -25,7 +26,12 @@ export default function NuevaRecomendacion() {
 
   const handleImageChange = (event) => {
     const selectedFile = event.target.files[0];
+    console.log(selectedFile);
+    setImage(selectedFile.name);
     setFile(selectedFile);
+
+    // Cerrar la ventana emergente al seleccionar una imagen
+    setOpenPopup(false);
   };
 
   const handleFlagsChange = (event) => {
@@ -59,7 +65,43 @@ export default function NuevaRecomendacion() {
       }
     }
 
-    // Resto del código para enviar los datos al backend
+    setSubmitClicked(true);
+  };
+
+  const handleGoBack = () => {
+    history.goBack();
+  };
+
+  const handleOpenPopup = async () => {
+    setOpenPopup(true);
+    setImage('');
+
+    try {
+      const response = await axios.get('https://sigesback-production.up.railway.app/cloudinary');
+
+      const filteredImages = response.data.resources.filter((image) => image.folder === 'recommendations');
+      setCloudinaryImages(filteredImages);
+      console.log(cloudinaryImages);
+    } catch (error) {
+      console.error('Error al cargar las imágenes de Cloudinary:', error);
+    }
+  };
+
+  const handleImageClick = (imageUrl) => {
+    setImage(imageUrl);
+    setOpenPopup(false);
+  };
+
+  useEffect(() => {
+    if (image !== '' && /^https?:\/\//.test(image)) {
+      setImageLoaded(true);
+    } else {
+      setImageLoaded(false);
+    }
+
+    if(submitClicked && imageLoaded){
+      console.log("hago el dispatch al back")
+          // Resto del código para enviar los datos al backend
     const data = {
       title: title,
       text: text,
@@ -69,32 +111,16 @@ export default function NuevaRecomendacion() {
     // Realizar la lógica para enviar los datos al backend
     console.log(data);
     // Luego puedes redirigir o realizar alguna acción adicional
-  };
+    setTitle('');
+    setText('');
+    setImage('');
+    setFlags([]);
+    setFile(null);
+    setSubmitClicked(false);
+    setImageLoaded(false);
 
-  const handleGoBack = () => {
-    history.goBack();
-  };
-
-  const handleOpenPopup = async () => {
-    setOpenPopup(true);
-
-      const username = '528937882136667';
-      const password = 'H-WT2Ys7_qZb_A5KD2dW-HjtBkU';
-      const basicAuth = `Basic ${Buffer.from(`${username}:${password}`).toString('base64')}`;
-
-  try {
-    const response = await axios.get('https://api.cloudinary.com/v1_1/diapwgajv/resources/image', {
-      headers: {
-        Authorization: basicAuth,
-      },
-    });
-
-    console.log(response.data);
-    } catch (error) {
-      console.error('Error al cargar las imágenes de Cloudinary:', error);
     }
-  };
-  
+  }, [image,submitClicked,imageLoaded,title,text,flags]);
 
   return (
     <div>
@@ -132,12 +158,6 @@ export default function NuevaRecomendacion() {
           <Grid item xs={12}>
             <Grid container spacing={2}>
               <Grid item>
-                <Button variant="contained" component="label">
-                  Upload Local Photo
-                  <input type="file" style={{ display: 'none' }} onChange={handleImageChange} />
-                </Button>
-              </Grid>
-              <Grid item>
                 <Button variant="contained" color="primary" onClick={handleOpenPopup}>
                   Elegir Foto
                 </Button>
@@ -167,10 +187,24 @@ export default function NuevaRecomendacion() {
       {/* Ventana emergente */}
       {openPopup && (
         <div className="popup">
+          {/* Botones en la parte superior */}
+          <div className="popup-buttons">
+            <Button variant="contained" color="secondary" onClick={() => setOpenPopup(false)}>
+              Cerrar
+            </Button>
+            <div className="popup-title">Seleccione una imagen</div>
+            <Button variant="contained" component="label">
+              Cargar nueva imagen
+              <input type="file" style={{ display: 'none' }} onChange={handleImageChange} />
+            </Button>
+          </div>
+
           {/* Contenido de la ventana emergente */}
-          {cloudinaryImages.map((imageUrl, index) => (
-            <img key={index} src={imageUrl} alt={`${index}`} />
-          ))}
+          <div className="image-container">
+            {cloudinaryImages.map((e, index) => (
+              <img key={index} src={e.url} alt={`${index}`} onClick={() => handleImageClick(e.url)} />
+            ))}
+          </div>
         </div>
       )}
 
@@ -184,6 +218,33 @@ export default function NuevaRecomendacion() {
           padding: 20px;
           border: 1px solid #ccc;
           z-index: 9999;
+          width: 1000px; /* Ajusta el tamaño de la ventana emergente a tu gusto */
+          height: 800px; /* Ajusta el tamaño de la ventana emergente a tu gusto */
+          overflow: auto;
+        }
+
+        .popup-buttons {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 16px;
+        }
+
+        .popup-title {
+          font-size: 1.2rem;
+          font-weight: bold;
+        }
+
+        .image-container {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          grid-gap: 16px;
+        }
+
+        .image-container img {
+          width: 100%;
+          height: 200px;
+          cursor: pointer;
         }
       `}</style>
     </div>
