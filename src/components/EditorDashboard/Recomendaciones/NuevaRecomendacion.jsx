@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { TextField, Button, Grid, FormControl, InputLabel, Select, MenuItem, Box } from '@mui/material';
 import { useHistory } from 'react-router-dom';
-import { Image } from 'cloudinary-react';
+import { Buffer } from 'buffer';
 
 export default function NuevaRecomendacion() {
   const [title, setTitle] = useState('');
@@ -9,6 +9,8 @@ export default function NuevaRecomendacion() {
   const [image, setImage] = useState('');
   const [flags, setFlags] = useState([]);
   const [file, setFile] = useState(null);
+  const [openPopup, setOpenPopup] = useState(false);
+  const [cloudinaryImages, setCloudinaryImages] = useState([]);
 
   const history = useHistory();
 
@@ -35,12 +37,11 @@ export default function NuevaRecomendacion() {
     // Verificar si se seleccionó una foto localmente
     if (file) {
       try {
-
         const cloudName = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
 
         const formData = new FormData();
         formData.append('file', file);
-        formData.append('upload_preset', 'recommendations'); // Reemplaza 'TU_PRESET' con tu propio valor de upload_preset
+        formData.append('upload_preset', 'recommendations');
 
         const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
           method: 'POST',
@@ -73,30 +74,25 @@ export default function NuevaRecomendacion() {
     history.goBack();
   };
 
-  const openMediaLibrary = async () => {
+  const handleOpenPopup = async () => {
+    setOpenPopup(true);
     try {
-      const cloudName = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
-      const uploadPreset = process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET;
-
-      const result = await window.cloudinary.openUploadWidget({
-        cloudName: cloudName,
-        uploadPreset: uploadPreset,
-        multiple: false,
-        resourceType: 'image',
-        maxFiles: 1,
-        language: 'es',
-      });
-
-      console.log(result)
-
-      if (result.event === 'success') {
-        const selectedImage = result.info.secure_url;
-        setImage(selectedImage);
-      }
+     /*  const results = await fetch('/api/v1_1/diapwgajv/resources/search', {
+			headers: {
+				Authorization: `Basic ${Buffer.from(
+					CLOUDINARY_API_KEY + ':' + CLOUDINARY_API_SECRET
+				).toString('base64')}`,
+			},
+		}).then((res) => res.json());
+		const cloudinary_array = await results.resources;
+		const cloudinary_images = await cloudinary_array.filter(
+			(index) => index.folder === 'AppGym-facilities'
+		); */
     } catch (error) {
-      console.error('Error al abrir la biblioteca de medios de Cloudinary:', error);
+      console.error('Error al cargar las imágenes de Cloudinary:', error);
     }
   };
+  
 
   return (
     <div>
@@ -140,8 +136,8 @@ export default function NuevaRecomendacion() {
                 </Button>
               </Grid>
               <Grid item>
-                <Button variant="contained" color="primary" onClick={openMediaLibrary}>
-                  Select Photo from Cloudinary
+                <Button variant="contained" color="primary" onClick={handleOpenPopup}>
+                  Elegir Foto
                 </Button>
               </Grid>
             </Grid>
@@ -165,9 +161,29 @@ export default function NuevaRecomendacion() {
           </Grid>
         </Grid>
       </form>
-      <Grid item xs={12}>
-        {image && <Image cloudName="TU_CLOUD_NAME" publicId={image} />}
-      </Grid>
+
+      {/* Ventana emergente */}
+      {openPopup && (
+        <div className="popup">
+          {/* Contenido de la ventana emergente */}
+          {cloudinaryImages.map((imageUrl, index) => (
+            <img key={index} src={imageUrl} alt={`${index}`} />
+          ))}
+        </div>
+      )}
+
+      <style jsx>{`
+        .popup {
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background-color: white;
+          padding: 20px;
+          border: 1px solid #ccc;
+          z-index: 9999;
+        }
+      `}</style>
     </div>
   );
 }
