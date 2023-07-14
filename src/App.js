@@ -16,6 +16,7 @@ import Manuales from './components/Manuales/Manuales';
 import EditorDashboard from './components/EditorDashboard/EditorDashboard';
 import NuevaRecomendacion from './components/EditorDashboard/Recomendaciones/NuevaRecomendacion';
 import ModificarRecomendacion from './components/EditorDashboard/Recomendaciones/ModificarRecomendacion';
+import NuevaNovedad from './components/EditorDashboard/Novedades/NuevaNovedad';
 
 function App() {
   return (
@@ -43,6 +44,9 @@ function App() {
       </Route>
       <Route exact path='/recomendaciones/modificar/:id'>
         <ModificarRecomendacion/>
+      </Route>
+      <Route exact path='/novedades/crear'>
+        <NuevaNovedad/>
       </Route>
       <Route exact path='/soporte'>
         <Soporte/>

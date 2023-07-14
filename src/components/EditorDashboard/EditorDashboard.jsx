@@ -6,6 +6,7 @@ import { styled } from "@mui/system";
 import Box from "@mui/material/Box";
 
 import EditorRecomendaciones from "./Recomendaciones/EditorRecomendaciones";
+import EditorNovedades from "./Novedades/EditorNovedades";
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
   marginBottom: theme.spacing(2),
@@ -21,10 +22,6 @@ const OptionWrapper = styled(Box)(({ theme }) => ({
   cursor: "pointer",
   marginRight: theme.spacing(2),
 }));
-
-const NovedadesComponent = () => {
-  return <div>Componente de Novedades</div>;
-};
 
 const ManualesComponent = () => {
   return <div>Componente de Manuales</div>;
@@ -42,7 +39,7 @@ export default function EditorDashboard() {
   if (selectedOption === "recomendaciones") {
     componentToRender = <EditorRecomendaciones />;
   } else if (selectedOption === "novedades") {
-    componentToRender = <NovedadesComponent />;
+    componentToRender = <EditorNovedades />;
   } else if (selectedOption === "manuales") {
     componentToRender = <ManualesComponent />;
   }
