@@ -30,6 +30,14 @@ export default function AdminDashboard() {
         Computadoras
         </Button>
       </Link>
+      <Link to="/admin/planilla">
+        <Button 
+        variant="outlined" 
+        color="primary" 
+        >
+        Carga planilla
+        </Button>
+      </Link>
     </div>
   );
 }

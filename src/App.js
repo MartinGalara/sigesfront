@@ -17,6 +17,7 @@ import EditorDashboard from './components/EditorDashboard/EditorDashboard';
 import NuevaRecomendacion from './components/EditorDashboard/Recomendaciones/NuevaRecomendacion';
 import ModificarRecomendacion from './components/EditorDashboard/Recomendaciones/ModificarRecomendacion';
 import NuevaNovedad from './components/EditorDashboard/Novedades/NuevaNovedad';
+import Planilla from './components/Planilla/Planilla';
 
 function App() {
   return (
@@ -71,6 +72,9 @@ function App() {
       </Route>
       <Route exact path='/admin/computers'>
         <Computers/>
+      </Route>
+      <Route exact path='/admin/planilla'>
+        <Planilla/>
       </Route>
       
     </div>
