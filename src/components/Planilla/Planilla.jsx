@@ -11,6 +11,9 @@ import TableBody from '@mui/material/TableBody';
 import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 
+import axios from 'axios';
+
+
 export default function Planilla() {
   const [csvFile, setCsvFile] = useState(null);
   const [isSubmitButtonDisabled, setIsSubmitButtonDisabled] = useState(true);
@@ -31,9 +34,18 @@ export default function Planilla() {
     }
   };
 
-  const handleEnviarPlanilla = () => {
-    // Lógica para enviar la planilla
-    // Puedes realizar aquí la acción que necesites
+  const handleEnviarPlanilla = async () => {
+
+    const config = {
+        method: 'post',
+        url: 'http://localhost:80/devices',
+        data: csvFile
+ 
+      }
+    
+      const result = await axios(config)
+
+      console.log(result)
   };
 
   const validate = (data) => {
@@ -78,8 +90,10 @@ export default function Planilla() {
                 canSOS: getBoolean(data[i][8]),
                 adminPdf: getBoolean(data[i][9]),
                 manager: getBoolean(data[i][10]),
-                area: data[i][11],
+                area: data[i][11] !== "" ? data[i][11] : null,
                 email: data[i][12],
+                clientId: clientId,
+                createdBy: "Planilla"
               };
             botusers.push(botuser)
         }
@@ -88,7 +102,7 @@ export default function Planilla() {
 
     const client = {
         id: clientId,
-        email: data[4][2],
+        email: [data[4][2]],
         info: razonSocial
     }
 
@@ -97,6 +111,8 @@ export default function Planilla() {
         botusers,
         client
     }
+
+    console.log(completeData)
 
     return completeData
 
@@ -176,6 +192,14 @@ export default function Planilla() {
           Cargar Planilla
         </Button>
       </label>
+      <Button
+            variant="contained"
+            color="primary"
+            onClick={handleEnviarPlanilla}
+            disabled={isSubmitButtonDisabled}
+          >
+            Enviar Planilla
+        </Button>
 
       {csvFile && (
         <div>
@@ -206,15 +230,15 @@ export default function Planilla() {
               <TableHead>
                 <TableRow>
                   <TableCell>Alias</TableCell>
-                  <TableCell>Area</TableCell>
-                  <TableCell>Bandera</TableCell>
-                  <TableCell>Ciudad</TableCell>
-                  <TableCell>Client ID</TableCell>
-                  <TableCell>Extras</TableCell>
-                  <TableCell>Identificador</TableCell>
-                  <TableCell>Prefijo</TableCell>
-                  <TableCell>Razón Social</TableCell>
                   <TableCell>TeamViewer ID</TableCell>
+                  <TableCell>Client ID</TableCell>
+                  <TableCell>Razón Social</TableCell>
+                  <TableCell>Bandera</TableCell>
+                  <TableCell>Identificador</TableCell>
+                  <TableCell>Ciudad</TableCell>
+                  <TableCell>Area</TableCell>
+                  <TableCell>Prefijo</TableCell>
+                  <TableCell>Extras</TableCell>
                   <TableCell>TvAlias</TableCell>
                 </TableRow>
               </TableHead>
@@ -222,15 +246,15 @@ export default function Planilla() {
                 {csvFile.devices.map((device, index) => (
                   <TableRow key={index}>
                     <TableCell>{device.alias}</TableCell>
-                    <TableCell>{device.area}</TableCell>
-                    <TableCell>{device.bandera}</TableCell>
-                    <TableCell>{device.ciudad}</TableCell>
-                    <TableCell>{device.clientId}</TableCell>
-                    <TableCell>{device.extras}</TableCell>
-                    <TableCell>{device.identificador}</TableCell>
-                    <TableCell>{device.prefijo}</TableCell>
-                    <TableCell>{device.razonSocial}</TableCell>
                     <TableCell>{device.teamviewer_id}</TableCell>
+                    <TableCell>{device.clientId}</TableCell>
+                    <TableCell>{device.razonSocial}</TableCell>
+                    <TableCell>{device.bandera}</TableCell>
+                    <TableCell>{device.identificador}</TableCell>
+                    <TableCell>{device.ciudad}</TableCell>
+                    <TableCell>{device.area}</TableCell>
+                    <TableCell>{device.prefijo}</TableCell>
+                    <TableCell>{device.extras}</TableCell>
                     <TableCell>{device.tvalias}</TableCell>
                   </TableRow>
                 ))}
@@ -269,16 +293,7 @@ export default function Planilla() {
               </TableBody>
             </Table>
           </TableContainer>
-          
-          {/* Botón "Enviar Planilla" habilitado según el estado de isSubmitButtonDisabled */}
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleEnviarPlanilla}
-            disabled={isSubmitButtonDisabled}
-          >
-            Enviar Planilla
-          </Button>
+        
         </div>
       )}
     </div>
