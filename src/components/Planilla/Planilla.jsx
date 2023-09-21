@@ -43,7 +43,7 @@ export default function Planilla() {
 
     const config = {
         method: 'post',
-        url: 'http://tvserver-production.up.railway.app/devices',
+        url: 'https://tvserver-production.up.railway.app/devices',
         data: csvFile
  
       }
@@ -179,7 +179,7 @@ export default function Planilla() {
   const handleActualizarDB = async () => {
     // Realiza una solicitud al endpoint de actualización de la base de datos
     try {
-      await axios.get('http://tvserver-production.up.railway.app/devices');
+      await axios.get('https://tvserver-production.up.railway.app/devices');
 
       setUpdateMessage('Base de datos actualizada');
       setIsSnackbarOpen(true);
