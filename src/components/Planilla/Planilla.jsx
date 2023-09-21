@@ -50,6 +50,8 @@ export default function Planilla() {
     
       await axios(config)
 
+      document.getElementById('file-upload').value = '';
+
       setCsvFile(null);
       setIsSubmitButtonDisabled(true);
       setSuccessMessage('Datos cargados exitosamente');
