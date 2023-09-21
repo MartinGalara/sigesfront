@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
+import Snackbar from '@mui/material/Snackbar';
 import Papa from 'papaparse';
 
 import TableContainer from '@mui/material/TableContainer';
@@ -13,10 +16,12 @@ import TableCell from '@mui/material/TableCell';
 
 import axios from 'axios';
 
-
 export default function Planilla() {
   const [csvFile, setCsvFile] = useState(null);
   const [isSubmitButtonDisabled, setIsSubmitButtonDisabled] = useState(true);
+  const [successMessage, setSuccessMessage] = useState('');
+  const [updateMessage, setUpdateMessage] = useState('');
+  const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
 
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
@@ -38,14 +43,17 @@ export default function Planilla() {
 
     const config = {
         method: 'post',
-        url: 'http://localhost:80/devices',
+        url: 'http://tvserver-production.up.railway.app/devices',
         data: csvFile
  
       }
     
-      const result = await axios(config)
+      await axios(config)
 
-      console.log(result)
+      setCsvFile(null);
+      setIsSubmitButtonDisabled(true);
+      setSuccessMessage('Datos cargados exitosamente');
+      setIsSnackbarOpen(true);
   };
 
   const validate = (data) => {
@@ -112,8 +120,6 @@ export default function Planilla() {
         client
     }
 
-    console.log(completeData)
-
     return completeData
 
   }
@@ -170,6 +176,23 @@ export default function Planilla() {
 
   }
 
+  const handleActualizarDB = async () => {
+    // Realiza una solicitud al endpoint de actualización de la base de datos
+    try {
+      await axios.get('http://tvserver-production.up.railway.app/devices');
+
+      setUpdateMessage('Base de datos actualizada');
+      setIsSnackbarOpen(true);
+    } catch (error) {
+      console.error('Error al actualizar la base de datos:', error);
+      // Maneja los errores de actualización de la base de datos según sea necesario
+    }
+  };
+
+  const handleSnackbarClose = () => {
+    setIsSnackbarOpen(false);
+  };
+
   return (
     <div>
       <Button component={Link} to="/admin" variant="contained" color="primary">
@@ -200,6 +223,31 @@ export default function Planilla() {
           >
             Enviar Planilla
         </Button>
+        <Button
+        variant="contained"
+        color="primary"
+        onClick={handleActualizarDB}
+      >
+        Actualizar DB
+      </Button>
+
+      <Snackbar
+        open={isSnackbarOpen}
+        autoHideDuration={5000}
+        onClose={handleSnackbarClose}
+      >
+        <Alert
+          onClose={handleSnackbarClose}
+          severity={successMessage ? 'success' : 'info'}
+        >
+          {successMessage ? (
+            <AlertTitle>Éxito</AlertTitle>
+          ) : (
+            <AlertTitle>Información</AlertTitle>
+          )}
+          {successMessage || updateMessage}
+        </Alert>
+      </Snackbar>
 
       {csvFile && (
         <div>
