@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllComputers } from "../../redux/actions";
 import { Card, TextField, Button } from "@mui/material";
 import ComputerCard from "../ComputerCard/ComputerCard";
+import { Link } from 'react-router-dom';
 
 export default function Computers() {
   const dispatch = useDispatch();
@@ -58,6 +59,9 @@ export default function Computers() {
 
   return (
     <div>
+      <Button component={Link} to="/admin" variant="contained" color="primary">
+        Volver
+      </Button>
       <TextField
         label="Buscar por nombre o ID del cliente"
         variant="outlined"

@@ -18,6 +18,8 @@ import NuevaRecomendacion from './components/EditorDashboard/Recomendaciones/Nue
 import ModificarRecomendacion from './components/EditorDashboard/Recomendaciones/ModificarRecomendacion';
 import NuevaNovedad from './components/EditorDashboard/Novedades/NuevaNovedad';
 import Planilla from './components/Planilla/Planilla';
+import Clients from './components/Clients/Clients';
+import EditClient from './components/Clients/EditClient';
 
 function App() {
   return (
@@ -75,6 +77,12 @@ function App() {
       </Route>
       <Route exact path='/admin/planilla'>
         <Planilla/>
+      </Route>
+      <Route exact path='/admin/clients'>
+        <Clients/>
+      </Route>
+      <Route exact path='/admin/clients/:id'>
+        <EditClient/>
       </Route>
       
     </div>
