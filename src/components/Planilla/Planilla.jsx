@@ -44,6 +44,7 @@ export default function Planilla() {
     const config = {
         method: 'post',
         url: 'https://tvserver-production.up.railway.app/devices',
+        //url: 'http://localhost:80/devices',
         data: csvFile
  
       }
