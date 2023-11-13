@@ -17,8 +17,8 @@ export default function Computers() {
   const filterComputers = useCallback(() => {
     const searchTerm = searchValue.toLowerCase();
     const filtered = allComputers.filter((computer) => {
-      const clientInfo = computer.user.info.toLowerCase();
-      const clientId = computer.userId.toLowerCase()
+      const clientInfo = computer.client.info.toLowerCase();
+      const clientId = computer.clientId.toLowerCase()
       return clientInfo.includes(searchTerm.toLowerCase()) || clientId.includes(searchTerm.toLowerCase());
     });
     setFilteredComputers(filtered);
@@ -86,11 +86,12 @@ export default function Computers() {
           <Card variant="outlined" key={el.id}>
             <ComputerCard
               alias={el.alias}
+              area={el.area}
+              client={el.client.info}
+              clientId={el.clientId}
+              extras={el.extras}
               teamviewer_id={el.teamviewer_id}
-              client={el.user.info}
-              zone={el.zone}
               id={el.id}
-              order={el.order}
             />
           </Card>
         );

@@ -44,7 +44,7 @@ export function createTicket(arg) {
 
   export function getAllComputers() {
     return async function (dispatch) {
-      var allComputers = await axios.get(`https://sigesback-production.up.railway.app/computers`);
+      var allComputers = await axios.get(`https://sigesback-production.up.railway.app/pcs`);
       return dispatch({
         type: GET_ALL_COMPUTERS,
         payload: allComputers.data,
@@ -54,7 +54,7 @@ export function createTicket(arg) {
 
   export function getComputer(id) {
     return async function (dispatch) {
-      const computer = await axios.get(`https://sigesback-production.up.railway.app/computers/${id}`);
+      const computer = await axios.get(`https://sigesback-production.up.railway.app/pcs/${id}`);
       return dispatch({
         type: GET_COMPUTER,
         payload: computer.data,
@@ -70,7 +70,7 @@ export function createTicket(arg) {
 
   export function editComputer(id,input) {
     return async function () {
-      await axios.put(`https://sigesback-production.up.railway.app/computers/${id}`,input);
+      await axios.put(`https://sigesback-production.up.railway.app/pcs/${id}`,input);
     };
   }
 

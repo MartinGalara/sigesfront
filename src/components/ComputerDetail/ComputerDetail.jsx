@@ -13,6 +13,8 @@ export default function ComputerDetail() {
   const computer = useSelector((state) => state.computerDetail);
   const history = useHistory();
 
+  console.log(computer)
+
   const [input, setInput] = useState({
     alias: "",
     teamviewer_id: "",

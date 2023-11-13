@@ -2,7 +2,9 @@ import React from "react";
 import { Button }  from '@mui/material'
 import { Link } from "react-router-dom";
 
-export default function ComputerCard({ id, alias, teamviewer_id, client, zone, order }) {
+export default function ComputerCard({ alias, area, client, clientId, extras, teamviewer_id, id }) {
+
+  console.log(alias)
 
   return (
     <div>
@@ -10,17 +12,21 @@ export default function ComputerCard({ id, alias, teamviewer_id, client, zone, o
           Cliente: {client}
         </h3>
         <h3>
+          ID cliente: {clientId}
+        </h3>
+        <h3>
           Alias: {alias}
+        </h3>
+        <h3>
+          Area: {area}
         </h3>
         <h3>
           TeamViewer ID: {teamviewer_id}
         </h3>
         <h3>
-          Zona: {zone}
+          Extras: {extras}
         </h3>
-        <h3>
-          Orden: {order}
-        </h3>
+        
         <Link to={`/admin/computers/${id}`}>
             <Button 
             variant="outlined" 
