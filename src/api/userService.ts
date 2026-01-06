@@ -9,8 +9,16 @@ export interface User {
   razonSocial?: string;
   role?: string;
   status?: number;
-  clientId?: number;
-  // Agregar más campos según necesidad
+  clientId?: string;
+  owner?: boolean;
+  clientInfo?: {
+    id: string;
+    info: string;
+    email: string;
+    vip: string;
+    vipmail: string;
+    testing: boolean;
+  };
 }
 
 export interface CreateUserData {
@@ -27,8 +35,9 @@ export interface CreateUserData {
 class UserService {
   private apiUrl = `${API_BASE_URL}/users`;
 
-  async getUsers(): Promise<User[]> {
-    const response = await fetch(this.apiUrl, {
+  async getUsers(clientId?: string): Promise<User[]> {
+    const url = clientId ? `${this.apiUrl}?clientId=${clientId}` : this.apiUrl;
+    const response = await fetch(url, {
       headers: getAuthHeaders()
     });
 
@@ -65,6 +74,17 @@ class UserService {
     }
 
     return response.json();
+  }
+
+  async deleteUser(id: number): Promise<void> {
+    const response = await fetch(`${this.apiUrl}/${id}`, {
+      method: 'DELETE',
+      headers: getAuthHeaders()
+    });
+
+    if (!response.ok) {
+      throw new Error('Error eliminando usuario');
+    }
   }
 }
 
